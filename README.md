@@ -56,18 +56,17 @@ Battery defect ML/
 ├── model_export/
 │   ├── export_onnx.py          ← exports + quantizes the model (regenerable)
 │   ├── test_browser.mjs        ← headless-Chrome end-to-end smoke test
-│   └── plate_classifier.onnx   ← full float32 export (42 MB, generated)
+│   └── package.json            ← dev dependency for the smoke test
 ├── notebooks/
 │   ├── battery_defect_full.ipynb   ← training, evaluation, saves the model
 │   ├── plate_classifier.pt         ← trained PyTorch weights (the source of the web model)
 │   └── app.py                      ← desktop (OpenCV) version of the app
-├── scripts/                    ← exploratory / supporting scripts (see below)
-├── data/
-│   ├── good/  surface_error/  crack/  bend/
+├── DATA_AUDIT.md               ← data-quality notes for the thesis
+├── README.md, LICENSE, .gitignore
 └── requirements.txt, environment.yml
 ```
 
-Images under `data/` are **not** part of this repository's public license.
+`data/` (the training images) is kept locally and **not** committed — images are not part of this repository.
 
 ## The model
 
@@ -79,7 +78,7 @@ Images under `data/` are **not** part of this repository's public license.
 | Loss | cross-entropy with class weights |
 | Optimiser | Adam, learning rate 1e-4, batch size 8, 15 epochs |
 | Evaluation | leave-one-plate-out cross-validation |
-| Web model | same weights, **dynamically quantized to int8** (~4× smaller, ~11 MB) |
+| Web model | same weights, **statically quantized to int8 (QDQ)** (~4× smaller, ~11 MB) |
 
 **About the quantized web model.** The website uses a statically int8-quantized ONNX model (QDQ format) for fast loading on phones. On the test set it matches the float32 model except on borderline `crack` vs `bend` cases (maximum per-image probability shift ≈ 5%), where the float32 model is already uncertain. The **accuracy figures you report in the thesis must come from the full-precision PyTorch model's cross-validation** (run `notebooks/battery_defect_full.ipynb`), not from the quantized web model.
 
@@ -161,12 +160,9 @@ Confusion matrix:
 
 Package versions for reproducibility: `pip list | findstr /i "torch numpy pillow matplotlib scikit-learn opencv"`
 
-## About the other scripts
+## Desktop app
 
-- `notebooks/app.py` — desktop OpenCV app (webcam / image upload). Superseded by `docs/` for the web, but kept for offline desktop use.
-- `scripts/classify_train.py` — an earlier **2-class** (`good` / `defective`) experiment; expects a `data/defective/` folder. Kept for reference only.
-- `scripts/train_padim.py` — a from-scratch PaDiM-style anomaly-detector proof-of-concept (heatmap localisation). Not used by the final classifier.
-- `scripts/sanity_check.py` — pipeline smoke test (checks torch/torchvision and the data layout).
+A desktop (OpenCV) version with webcam / image upload is available at `notebooks/app.py` (`python app.py live`, `image`, or `pick`). The web app in `docs/` is the primary interface.
 
 ## Limitations
 
