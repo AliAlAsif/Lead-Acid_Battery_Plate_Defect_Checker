@@ -230,6 +230,10 @@ main {
   border: 1px solid var(--border);
 }
 
+.video-wrap {
+  position: relative;
+}
+
 #video {
   display: block;
   width: 100%;

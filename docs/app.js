@@ -142,13 +142,17 @@ function renderVerdict(el, probs) {
   const topIdx = probs.indexOf(Math.max.apply(null, probs));
   const cls = CLASSES[topIdx];
   const conf = probs[topIdx];
-  const uncertain = conf < CONF_THRESHOLD;
-  el.innerHTML = `
-    <div class="v-class" style="color:${cls.color}">${cls.label}</div>
-    <div class="v-conf">${Math.round(conf * 100)}% confidence</div>
-    <div class="v-note${uncertain ? " uncertain" : ""}">
-      ${uncertain ? "Low confidence — treat with care. " : ""}${cls.desc}
-    </div>`;
+  if (conf < CONF_THRESHOLD) {
+    el.innerHTML = `
+      <div class="v-class" style="color:#f59e0b">Uncertain</div>
+      <div class="v-conf">${Math.round(conf * 100)}% confidence — best guess: ${cls.label}</div>
+      <div class="v-note uncertain">Low confidence — treat with care. ${cls.desc}</div>`;
+  } else {
+    el.innerHTML = `
+      <div class="v-class" style="color:${cls.color}">${cls.label}</div>
+      <div class="v-conf">${Math.round(conf * 100)}% confidence</div>
+      <div class="v-note">${cls.desc}</div>`;
+  }
 }
 
 // ---------------------------------------------------------------------------

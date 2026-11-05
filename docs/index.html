@@ -48,10 +48,12 @@
     <!-- ============ LIVE CAMERA MODE ============ -->
     <section class="panel" id="panel-live" hidden>
       <div class="live-stage" id="live-stage">
-        <video id="video" autoplay playsinline muted></video>
-        <div class="live-overlay">
-          <div class="verdict verdict-live" id="live-verdict">Camera not started</div>
-          <div class="bars bars-live" id="live-bars"></div>
+        <div class="video-wrap">
+          <video id="video" autoplay playsinline muted></video>
+          <div class="live-overlay">
+            <div class="verdict verdict-live" id="live-verdict">Camera not started</div>
+            <div class="bars bars-live" id="live-bars"></div>
+          </div>
         </div>
         <div class="live-controls">
           <button class="btn primary" id="btn-start">Start camera</button>
