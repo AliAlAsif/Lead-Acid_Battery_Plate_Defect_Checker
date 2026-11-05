@@ -2,6 +2,8 @@
 
 Image classification of lead-acid battery plate photographs into four classes, delivered as a **mobile-friendly web app** that runs entirely in the browser (no server, no API key, no data leaves the device).
 
+**🔗 Live site:** https://alialasif.github.io/Lead-Acid_Battery_Plate_Defect_Checker/
+
 | Class | Meaning |
 |---|---|
 | `good` | No visible void, crack or bend |
@@ -11,7 +13,7 @@ Image classification of lead-acid battery plate photographs into four classes, d
 
 ## The web app
 
-Open `docs/index.html` (or the published GitHub Pages URL) to use it. Two modes:
+Open the [live site](https://alialasif.github.io/Lead-Acid_Battery_Plate_Defect_Checker/) (or `docs/index.html` locally) to use it. Two modes:
 
 - **Photo** — drop or tap to select an image. It shows the predicted class, confidence, and the probability for **all four** classes as bars.
 - **Live camera** — streams the device camera (back camera by default, switchable to front) and overlays the predicted class plus **all four percentages** updating in real time.
