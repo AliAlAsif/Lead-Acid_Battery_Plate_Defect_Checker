@@ -106,19 +106,60 @@ Fix this by renaming every file to `plateID_something.jpg` (same physical plate 
 
 ## Results
 
-*Not yet recorded.* After running notebook sections 5–6, fill in:
+Leave-one-plate-out cross-validation on the current dataset (80 images).
+
+> ⚠️ **Preliminary.** These numbers come from the current filenames, where the
+> plate split and the `synthetic` flag are **not yet correct** (see
+> `DATA_AUDIT.md`). Treat them as a baseline — re-run after fixing the data
+> before reporting them in the thesis.
+
+### All images ("with generated images")
+
+Per-plate accuracy: **0.79 ± 0.31** over 45 plates
 
 | Class | Precision | Recall | F1 | Support |
 |---|---|---|---|---|
-| good | | | | |
-| surface_error | | | | |
-| crack | | | | |
-| bend | | | | |
-| macro-F1 | | | | |
+| good | 0.77 | 0.71 | 0.74 | 14 |
+| surface_error | 1.00 | 1.00 | 1.00 | 24 |
+| crack | 0.75 | 0.67 | 0.71 | 27 |
+| bend | 0.63 | 0.80 | 0.71 | 15 |
+| **accuracy** | | | 0.80 | 80 |
+| **macro avg** | 0.79 | 0.80 | 0.79 | 80 |
+| **weighted avg** | 0.81 | 0.80 | 0.80 | 80 |
 
-Per-plate accuracy (mean ± std):
+Confusion matrix (rows = actual, columns = predicted; order: good, surface_error, crack, bend):
 
-Record your package versions: `pip list | findstr /i "torch numpy pillow matplotlib scikit-learn opencv"`
+| actual ↓ / predicted → | good | surface_error | crack | bend |
+|---|---|---|---|---|
+| good | 10 | 0 | 3 | 1 |
+| surface_error | 0 | 24 | 0 | 0 |
+| crack | 3 | 0 | 18 | 6 |
+| bend | 0 | 0 | 3 | 12 |
+
+### Ablation ("real images only")
+
+Per-plate accuracy: **0.77 ± 0.32** over 45 plates
+
+| Class | Precision | Recall | F1 | Support |
+|---|---|---|---|---|
+| good | 0.77 | 0.71 | 0.74 | 14 |
+| surface_error | 1.00 | 1.00 | 1.00 | 24 |
+| crack | 0.75 | 0.67 | 0.71 | 27 |
+| bend | 0.58 | 0.73 | 0.65 | 15 |
+| **accuracy** | | | 0.79 | 80 |
+| **macro avg** | 0.77 | 0.78 | 0.77 | 80 |
+| **weighted avg** | 0.80 | 0.79 | 0.79 | 80 |
+
+Confusion matrix:
+
+| actual ↓ / predicted → | good | surface_error | crack | bend |
+|---|---|---|---|---|
+| good | 10 | 0 | 2 | 2 |
+| surface_error | 0 | 24 | 0 | 0 |
+| crack | 3 | 0 | 18 | 6 |
+| bend | 0 | 0 | 4 | 11 |
+
+Package versions for reproducibility: `pip list | findstr /i "torch numpy pillow matplotlib scikit-learn opencv"`
 
 ## About the other scripts
 
