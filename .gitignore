@@ -1,0 +1,22 @@
+# Python
+__pycache__/
+*.pyc
+.venv/
+.ipynb_checkpoints/
+
+# Training images — plant photos are NOT published (see README "Safety and data")
+data/
+ML data for Battary/
+
+# Large / regenerable model artifacts
+# (docs/model.onnx is the deployed model and MUST be committed)
+model_export/*.onnx
+
+# Node (browser smoke test only)
+node_modules/
+package-lock.json
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.idea/

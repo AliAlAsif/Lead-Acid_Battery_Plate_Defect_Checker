@@ -1,0 +1,20 @@
+name: battery-defect
+channels:
+  - pytorch
+  - conda-forge
+  - defaults
+dependencies:
+  - python=3.10
+  - pytorch
+  - torchvision
+  - cpuonly          # remove this line if you installed the CUDA build instead
+  - pip
+  - pip:
+      - opencv-python
+      - albumentations
+      - matplotlib
+      - scikit-learn
+      - jupyterlab
+
+# Create with:   conda env create -f environment.yml
+# Activate with: conda activate battery-defect
